@@ -63,6 +63,7 @@ public class DLinkedList {
 		Node newNode = new Node(o);
 		
 		// step 2: update the new node's next node
+		newNode.setNextNode(headNode);
 		
 		// step 3: if headNode is not null, update its previous node
 		if (headNode != null)
@@ -73,7 +74,10 @@ public class DLinkedList {
 		
 		// step 5: special case: adding to empty list,
 		//         what to do with tailNode (which will be null)?
-		
+		if (tailNode == null) {
+		    tailNode = newNode;
+		}
+
 	}
 	
 	
@@ -88,16 +92,19 @@ public class DLinkedList {
 		//   check: is tailNode null?
 		//   solution: update tailNode and headNode.
 		if (tailNode == null) {
-		
+			tailNode = newNode;
+		    headNode = newNode;
 		}
 		// step 2b: otherwise, adding to non-empty list
 		else{
 			// step 3: update new node's previous node
-			
+			newNode.setPrevNode(tailNode);
+
 			// step 4: update the tailNode's next node
 			tailNode.setNextNode(newNode);
 			
 			// step 5: update the tailNode
+			tailNode = newNode;
 		}
 	}
 		
@@ -115,11 +122,13 @@ public class DLinkedList {
 		// step 2: if one element in list
 		else if(headNode == tailNode){
 			// step 2a: get the value of the head node
-			Object res = null; /* TODO */
-			
+			Object res = headNode.getValue();
+
 			// step 2b: update headNode
-			
+			headNode = null;
+
 			// step 2c: update tailNode
+			tailNode = null;
 
 			// step 2d: return the head node's value
 			return res;
@@ -128,12 +137,13 @@ public class DLinkedList {
 		// step 3: for the multi element list case
 		else {
 			// step 3a: get the head node's value
-			Object res = null; /* TODO */
-			
+			Object res = headNode.getValue();
+
 			// step 3b: update headNode
+			headNode = headNode.getNextNode();
 
 			// step 3c: update headNode's previous value
-
+			headNode.setPrevNode(null);
 			return res;
 		}
 	}
